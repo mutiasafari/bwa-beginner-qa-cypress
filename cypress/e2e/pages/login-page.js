@@ -56,6 +56,14 @@ export class LoginPage {
     verifyUrlEndPoint(endPoint) {
         cy.url().should("contain", endPoint);
     }
+
+    login(user, pass) {
+        this.navigate();
+        this.inputEmail(user);
+        this.inputPassword(pass);
+        this.clickButton();
+        this.verifyAlertText("welcome");
+    }
 }
 
 export default new LoginPage();

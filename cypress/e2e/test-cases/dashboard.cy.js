@@ -1,47 +1,22 @@
+/// <reference types="cypress"/>
+
+import dashboardPage from "../pages/dashboard-page";
+import loginPage from "../pages/login-page";
+
 describe("Dashboard Page Test Cases", () => {
-    it("Do login with correct values", () => {
-        cy.visit("http://localhost:3000/");
-        const email = cy.get("input[name='email']");
-        email.type("user@react.test");
-
-        const password = cy.get("input[name='password']");
-        password.type("password");
-
-        const button = cy.get("button");
-        button.click();
-
-        cy.on("windows:alert", (text) => {
-            expect(text).to.contains("welcome");
-        });
-
-        cy.url().should("eq", "http://localhost:3000/dashboard");
+    beforeEach(() => {
+        loginPage.login("user@react.test", "password");
+        loginPage.verifyUrlEndPoint("dashboard");
     });
 
     it("Found no post for the first time", () => {
-        cy.contains("Found 0 photos");
+        dashboardPage.verifyNumberOfPhoto(0);
     });
 
     it("Contains image url and description input and publish button", () => {
-        // check image
-        const image = cy.get("input[name='image']");
-        image.should("be.visible");
-        image.should("have.attr", "type", "url");
-        image.should("have.attr", "required", "required");
-        image.should("have.attr", "placeholder", "Image URL");
-
-        // check description
-        const description = cy.get("input[name='desc']");
-        description.should("be.visible");
-        description.should("have.attr", "type", "text");
-        description.should("have.attr", "required", "required");
-        description.should("have.attr", "placeholder", "What's on your mind?");
-
-        // check button
-        const button = cy.get("button");
-        button.should("be.visible");
-        button.contains("Publish!");
-        button.should("have.css", "background-color", "rgb(79, 70, 229)");
-        button.should("have.css", "color", "rgb(255, 255, 255)");
+        dashboardPage.verifyFieldImageUrl();
+        dashboardPage.verifyFieldDescription();
+        dashboardPage.verifyButton();
     });
 
     it("Upload some photos", () => {
@@ -59,20 +34,14 @@ describe("Dashboard Page Test Cases", () => {
         ];
 
         photos.forEach(({ imageValue, descriptionValue }) => {
-            const image = cy.get("input[name='image']");
-            image.type(imageValue);
-
-            const description = cy.get("input[name='desc']");
-            description.type(descriptionValue);
-
-            const button = cy.get("button");
-            button.click();
+            dashboardPage.inputImageUrl(imageValue);
+            dashboardPage.inputDescription(descriptionValue);
+            dashboardPage.clickButton();
 
             // check uploaded image is exist
-            cy.get("img").should("have.attr", "src", imageValue);
-            cy.contains(descriptionValue);
+            dashboardPage.verifyContent(imageValue, descriptionValue);
         });
 
-        cy.contains(`Found ${photos.length} photos`);
+        dashboardPage.verifyNumberOfPhoto(photos.length);
     });
 });
