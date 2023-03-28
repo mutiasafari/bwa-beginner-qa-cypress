@@ -1,15 +1,15 @@
 {
-  "name": "react-gallery-cypress",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "open-cypress": "npx cypress open"
-  },
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "cypress": "^10.7.0"
-  }
+    "name": "react-gallery-cypress",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "cypress": "npx cypress open"
+    },
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "cypress": "^10.7.0"
+    }
 }
