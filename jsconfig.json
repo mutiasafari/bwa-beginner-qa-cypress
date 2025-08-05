@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@helper/*": ["tests/helper/*"],
+      "@page/*": ["tests/page/*"],
+      "@data/*": ["tests/data/*"],
+      "@const/*": ["tests/const/*"]
+    }
+  },
+  "include": ["tests"]
+}
